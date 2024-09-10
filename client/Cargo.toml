@@ -1,29 +1,24 @@
 [package]
-name = "bitcoincore-rpc"
+name = "satsnet-rpc"
 version = "0.19.0"
-authors = [
-    "Steven Roose <steven@stevenroose.org>",
-    "Jean Pierre Dudey <jeandudey@hotmail.com>",
-    "Dawid Ciężarkiewicz <dpc@dpc.pw>",
-]
+authors = ["Jacky Chen <softwarecheng@gmail.com>"]
 license = "CC0-1.0"
-homepage = "https://github.com/rust-bitcoin/rust-bitcoincore-rpc/"
-repository = "https://github.com/rust-bitcoin/rust-bitcoincore-rpc/"
-description = "RPC client library for the Bitcoin Core JSON-RPC API."
-keywords = ["crypto", "bitcoin", "bitcoin-core", "rpc"]
-readme = "README.md"
+homepage = "https://github.com/sat20-labs/rust-satsnet-rpc/"
+repository = "https://github.com/sat20-labs/rust-satsnet-rpc/"
+description = "RPC client library for the satsnet JSON-RPC API."
+keywords = ["crypto", "bitcoin", "satsnet", "rpc"]
 edition = "2018"
 
 [lib]
-name = "bitcoincore_rpc"
+name = "satsnet_rpc"
 path = "src/lib.rs"
 
 [features]
 default = ["rand"]
-rand = ["bitcoincore-rpc-json/rand"]
+rand = ["satsnet-rpc-json/rand"]
 
 [dependencies]
-bitcoincore-rpc-json = { version = "0.19.0", path = "../json" }
+satsnet-rpc-json = { version = "0.19.0", path = "../json" }
 
 log = "0.4.5"
 jsonrpc = { version = "0.18.0", features = ["minreq_http"] }
