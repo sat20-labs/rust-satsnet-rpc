@@ -1,6 +1,6 @@
 [package]
 name = "satsnet-rpc"
-version = "0.19.0"
+version = "0.19.1"
 authors = ["Jacky Chen <softwarecheng@gmail.com>"]
 license = "CC0-1.0"
 homepage = "https://github.com/sat20-labs/rust-satsnet-rpc/"

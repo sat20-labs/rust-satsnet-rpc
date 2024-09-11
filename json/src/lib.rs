@@ -1017,7 +1017,7 @@ pub enum StringOrStringArray {
 /// Models the result of "getblockchaininfo"
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GetBlockchainInfoResult {
-    /// Current network name as defined in BIP70 (main, test, signet, regtest)
+    /// Current network name as defined in BIP70 (main, test, signet, regtest, testnet4)
     #[serde(deserialize_with = "deserialize_bip70_network")]
     pub chain: Network,
     /// The current number of blocks processed in the server
@@ -2190,7 +2190,7 @@ where
 }
 
 /// deserialize_bip70_network deserializes a Bitcoin Core network according to BIP70
-/// The accepted input variants are: {"main", "test", "signet", "regtest"}
+/// The accepted input variants are: {"main", "test", "signet", "regtest", "tesnet4"}
 fn deserialize_bip70_network<'de, D>(deserializer: D) -> Result<Network, D::Error>
 where
     D: serde::Deserializer<'de>,
