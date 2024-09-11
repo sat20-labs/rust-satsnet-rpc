@@ -25,7 +25,7 @@ extern crate serde;
 pub extern crate jsonrpc;
 
 pub extern crate satsnet_rpc_json;
-pub use crate::json::bitcoin;
+pub use crate::json::satsnet;
 pub use satsnet_rpc_json as json;
 
 mod client;
