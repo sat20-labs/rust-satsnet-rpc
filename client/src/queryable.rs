@@ -8,7 +8,7 @@
 // If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-use crate::satsnet;
+use crate::bitcoin;
 use serde_json;
 
 use crate::client::Result;
@@ -22,28 +22,28 @@ pub trait Queryable<C: RpcApi>: Sized {
     fn query(rpc: &C, id: &Self::Id) -> Result<Self>;
 }
 
-impl<C: RpcApi> Queryable<C> for satsnet::block::Block {
-    type Id = satsnet::BlockHash;
+impl<C: RpcApi> Queryable<C> for bitcoin::block::Block {
+    type Id = bitcoin::BlockHash;
 
     fn query(rpc: &C, id: &Self::Id) -> Result<Self> {
         let rpc_name = "getblock";
         let hex: String = rpc.call(rpc_name, &[serde_json::to_value(id)?, 0.into()])?;
-        Ok(satsnet::consensus::encode::deserialize_hex(&hex)?)
+        Ok(bitcoin::consensus::encode::deserialize_hex(&hex)?)
     }
 }
 
-impl<C: RpcApi> Queryable<C> for satsnet::transaction::Transaction {
-    type Id = satsnet::Txid;
+impl<C: RpcApi> Queryable<C> for bitcoin::transaction::Transaction {
+    type Id = bitcoin::Txid;
 
     fn query(rpc: &C, id: &Self::Id) -> Result<Self> {
         let rpc_name = "getrawtransaction";
         let hex: String = rpc.call(rpc_name, &[serde_json::to_value(id)?])?;
-        Ok(satsnet::consensus::encode::deserialize_hex(&hex)?)
+        Ok(bitcoin::consensus::encode::deserialize_hex(&hex)?)
     }
 }
 
 impl<C: RpcApi> Queryable<C> for Option<crate::json::GetTxOutResult> {
-    type Id = satsnet::OutPoint;
+    type Id = bitcoin::OutPoint;
 
     fn query(rpc: &C, id: &Self::Id) -> Result<Self> {
         rpc.get_tx_out(&id.txid, id.vout, Some(true))

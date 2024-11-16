@@ -10,9 +10,9 @@
 
 //! A very simple example used as a self-test of this library against a Bitcoin
 //! Core node.
-extern crate satsnet_rpc;
+extern crate bitcoincore_rpc;
 
-use satsnet_rpc::{satsnet, Auth, Client, Error, RpcApi};
+use bitcoincore_rpc::{bitcoin, Auth, Client, Error, RpcApi};
 
 fn main_result() -> Result<(), Error> {
     let mut args = std::env::args();
@@ -35,11 +35,11 @@ fn main_result() -> Result<(), Error> {
     println!("best block hash by height: {}", best_block_hash_by_height);
     assert_eq!(best_block_hash_by_height, best_block_hash);
 
-    let satsnet_block: satsnet::Block = rpc.get_by_id(&best_block_hash)?;
-    println!("best block hash by `get`: {}", satsnet_block.header.prev_blockhash);
-    let satsnet_tx: satsnet::Transaction =
-        rpc.get_by_id(&satsnet_block.txdata[0].compute_txid())?;
-    println!("tx by `get`: {}", satsnet_tx.compute_txid());
+    let bitcoin_block: bitcoin::Block = rpc.get_by_id(&best_block_hash)?;
+    println!("best block hash by `get`: {}", bitcoin_block.header.prev_blockhash);
+    let bitcoin_tx: bitcoin::Transaction =
+        rpc.get_by_id(&bitcoin_block.txdata[0].compute_txid())?;
+    println!("tx by `get`: {}", bitcoin_tx.compute_txid());
 
     Ok(())
 }

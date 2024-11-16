@@ -10,9 +10,9 @@
 
 use std::{error, fmt, io};
 
-use crate::satsnet;
-use crate::satsnet::hashes::hex;
-use crate::satsnet::secp256k1;
+use crate::bitcoin;
+use crate::bitcoin::hashes::hex;
+use crate::bitcoin::secp256k1;
 use jsonrpc;
 use serde_json;
 
@@ -22,10 +22,10 @@ pub enum Error {
     JsonRpc(jsonrpc::error::Error),
     Hex(hex::HexToBytesError),
     Json(serde_json::error::Error),
-    BitcoinSerialization(satsnet::consensus::encode::FromHexError),
+    BitcoinSerialization(bitcoin::consensus::encode::FromHexError),
     Secp256k1(secp256k1::Error),
     Io(io::Error),
-    InvalidAmount(satsnet::amount::ParseAmountError),
+    InvalidAmount(bitcoin::amount::ParseAmountError),
     InvalidCookieFile,
     /// The JSON result had an unexpected structure.
     UnexpectedStructure,
@@ -51,8 +51,8 @@ impl From<serde_json::error::Error> for Error {
     }
 }
 
-impl From<satsnet::consensus::encode::FromHexError> for Error {
-    fn from(e: satsnet::consensus::encode::FromHexError) -> Error {
+impl From<bitcoin::consensus::encode::FromHexError> for Error {
+    fn from(e: bitcoin::consensus::encode::FromHexError) -> Error {
         Error::BitcoinSerialization(e)
     }
 }
@@ -69,8 +69,8 @@ impl From<io::Error> for Error {
     }
 }
 
-impl From<satsnet::amount::ParseAmountError> for Error {
-    fn from(e: satsnet::amount::ParseAmountError) -> Error {
+impl From<bitcoin::amount::ParseAmountError> for Error {
+    fn from(e: bitcoin::amount::ParseAmountError) -> Error {
         Error::InvalidAmount(e)
     }
 }
@@ -94,7 +94,7 @@ impl fmt::Display for Error {
 
 impl error::Error for Error {
     fn description(&self) -> &str {
-        "satsnet-rpc error"
+        "bitcoincore-rpc error"
     }
 
     fn cause(&self) -> Option<&dyn error::Error> {
