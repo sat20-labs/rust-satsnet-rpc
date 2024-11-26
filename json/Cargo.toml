@@ -1,6 +1,6 @@
 [package]
 name = "satsnet-rpc-json"
-version = "0.19.2"
+version = "0.19.3"
 authors = [
     "Jacky Chen <softwarecheng@gmail.com>"
 ]
@@ -20,9 +20,11 @@ path = "src/lib.rs"
 [features]
 default = ["rand"]
 rand = ["bitcoin/rand-std"]
+bitcoin_with_satsnet = ["rand"]
 
 [dependencies]
 serde = { version = "1", features = [ "derive" ] }
 serde_json = "1"
 
-bitcoin = { package = "satsnet", version = "0.32.10", features = ["serde"] }
+# bitcoin = { package = "satsnet", path = "/Users/chenwenjie/test/rust/rust-satsnet/satsnet", version = "0.32.13", features = ["serde"] }
+bitcoin = { package = "satsnet", version = "0.32.13", features = ["serde"] }

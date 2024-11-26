@@ -93,31 +93,46 @@ pub struct GetNetworkInfoResultAddress {
 #[derive(Clone, PartialEq, Eq, Debug, Deserialize, Serialize)]
 pub struct GetNetworkInfoResult {
     pub version: usize,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub subversion: String,
     #[serde(rename = "protocolversion")]
     pub protocol_version: usize,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "localservices")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub local_services: String,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "localrelay")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub local_relay: bool,
     #[serde(rename = "timeoffset")]
     pub time_offset: isize,
     pub connections: usize,
     /// The number of inbound connections
     /// Added in Bitcoin Core v0.21
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub connections_in: Option<usize>,
     /// The number of outbound connections
     /// Added in Bitcoin Core v0.21
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub connections_out: Option<usize>,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "networkactive")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub network_active: bool,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub networks: Vec<GetNetworkInfoResultNetwork>,
     #[serde(rename = "relayfee", with = "bitcoin::amount::serde::as_btc")]
     pub relay_fee: Amount,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "incrementalfee", with = "bitcoin::amount::serde::as_btc")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub incremental_fee: Amount,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "localaddresses")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub local_addresses: Vec<GetNetworkInfoResultAddress>,
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub warnings: StringOrStringArray,
 }
 
@@ -1031,15 +1046,21 @@ pub struct GetBlockchainInfoResult {
     #[serde(rename = "mediantime")]
     pub median_time: u64,
     /// Estimate of verification progress [0..1]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "verificationprogress")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub verification_progress: f64,
     /// Estimate of whether this node is in Initial Block Download mode
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "initialblockdownload")]
     pub initial_block_download: bool,
     /// Total amount of work in active chain, in hexadecimal
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "chainwork", with = "crate::serde_hex")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub chain_work: Vec<u8>,
     /// The estimated size of the block and undo files on disk
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub size_on_disk: u64,
     /// If the blocks are subject to pruning
     pub pruned: bool,
@@ -1051,9 +1072,12 @@ pub struct GetBlockchainInfoResult {
     /// The target size used by pruning (only present if automatic pruning is enabled)
     pub prune_target_size: Option<u64>,
     /// Status of softforks in progress
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(default)]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub softforks: HashMap<String, Softfork>,
     /// Any network and blockchain warnings. In later versions of bitcoind, it's an array of strings.
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub warnings: StringOrStringArray,
 }
 
@@ -1066,33 +1090,49 @@ pub enum ImportMultiRequestScriptPubkey<'a> {
 #[derive(Clone, PartialEq, Eq, Debug, Deserialize, Serialize)]
 pub struct GetMempoolInfoResult {
     /// True if the mempool is fully loaded
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub loaded: Option<bool>,
     /// Current tx count
     pub size: usize,
     /// Sum of all virtual transaction sizes as defined in BIP 141. Differs from actual serialized size because witness data is discounted
     pub bytes: usize,
     /// Total memory usage for the mempool
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub usage: usize,
     /// Total fees for the mempool in BTC, ignoring modified fees through prioritisetransaction
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(default, with = "bitcoin::amount::serde::as_btc::opt")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub total_fee: Option<Amount>,
     /// Maximum memory usage for the mempool
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "maxmempool")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub max_mempool: usize,
     /// Minimum fee rate in BTC/kvB for tx to be accepted. Is the maximum of minrelaytxfee and minimum mempool fee
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "mempoolminfee", with = "bitcoin::amount::serde::as_btc")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub mempool_min_fee: Amount,
     /// Current minimum relay fee for transactions
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "minrelaytxfee", with = "bitcoin::amount::serde::as_btc")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub min_relay_tx_fee: Amount,
     /// Minimum fee rate increment for mempool limiting or replacement in BTC/kvB
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "incrementalrelayfee", default, with = "bitcoin::amount::serde::as_btc::opt")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub incremental_relay_fee: Option<Amount>,
     /// Current number of transactions that haven't passed initial broadcast yet
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "unbroadcastcount")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub unbroadcast_count: Option<usize>,
     /// True if the mempool accepts RBF without replaceability signaling inspection
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     #[serde(rename = "fullrbf")]
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     pub full_rbf: Option<bool>,
 }
 

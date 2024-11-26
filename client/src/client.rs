@@ -235,7 +235,10 @@ pub trait RpcApi: Sized {
     }
 
     fn get_network_info(&self) -> Result<json::GetNetworkInfoResult> {
-        self.call("getnetworkinfo", &[])
+        #[cfg(feature = "bitcoin_with_satsnet")]
+        return self.call("getinfo", &[]);
+        #[cfg(not(feature = "bitcoin_with_satsnet"))]
+        return self.call("getnetworkinfo", &[]);
     }
 
     fn get_index_info(&self) -> Result<json::GetIndexInfoResult> {
@@ -247,6 +250,10 @@ pub trait RpcApi: Sized {
         struct Response {
             pub version: usize,
         }
+
+        #[cfg(feature = "bitcoin_with_satsnet")]
+        let res: Response = self.call("getinfo", &[])?;
+        #[cfg(not(feature = "bitcoin_with_satsnet"))]
         let res: Response = self.call("getnetworkinfo", &[])?;
         Ok(res.version)
     }
@@ -387,6 +394,21 @@ pub trait RpcApi: Sized {
 
     /// Returns a data structure containing various state info regarding
     /// blockchain processing.
+    #[cfg(feature = "bitcoin_with_satsnet")]
+    fn get_blockchain_info(&self) -> Result<json::GetBlockchainInfoResult> {
+        let raw: serde_json::Value = self.call("getblockchaininfo", &[])?;
+        Ok(if self.version()? < 24_02_00 {
+            let msg = format!(
+                "{} is not supported - please use satsnet? /btcd 240200+",
+                self.version()?
+            );
+            return Err(Error::ReturnedError(msg));
+        } else {
+            serde_json::from_value(raw)?
+        })
+    }
+
+    #[cfg(not(feature = "bitcoin_with_satsnet"))]
     fn get_blockchain_info(&self) -> Result<json::GetBlockchainInfoResult> {
         let mut raw: serde_json::Value = self.call("getblockchaininfo", &[])?;
         // The softfork fields are not backwards compatible:
