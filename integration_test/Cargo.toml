@@ -6,6 +6,6 @@ edition = "2018"
 
 [dependencies]
 bitcoincore-rpc = { package = "satsnet-rpc", path = "../client", features = ["rand"] }
-bitcoin = { package = "satsnet", version = "0.32.10", features = ["serde", "rand"] }
+bitcoin = { package = "satsnet", version = "0.32.14", features = ["serde", "rand"] }
 lazy_static = "1.4.0"
 log = "0.4"
