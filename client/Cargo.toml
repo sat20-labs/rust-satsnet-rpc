@@ -1,6 +1,6 @@
 [package]
 name = "satsnet-rpc"
-version = "0.19.5"
+version = "0.19.6"
 authors = ["Jacky Chen <softwarecheng@gmail.com>"]
 license = "CC0-1.0"
 homepage = "https://github.com/sat20-labs/rust-satsnet-rpc/"
@@ -20,7 +20,7 @@ rand = ["bitcoincore-rpc-json/rand"]
 bitcoin_with_satsnet = ["bitcoincore-rpc-json/bitcoin_with_satsnet"]
 
 [dependencies]
-bitcoincore-rpc-json = { package = "satsnet-rpc-json", version = "0.19.5", path = "../json" }
+bitcoincore-rpc-json = { package = "satsnet-rpc-json", version = "0.19.6", path = "../json" }
 
 log = "0.4.5"
 jsonrpc = { version = "0.18.0", features = ["minreq_http"] }
